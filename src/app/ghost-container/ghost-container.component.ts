@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HandComponent } from '../hand/hand.component';
 
 @Component({
   selector: 'app-ghost-container',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class GhostContainerComponent implements OnInit {
+
+  @ViewChild(HandComponent)
+  private handComponent: HandComponent;
 
   psychics = new Array<String>('1', '2', '3');
   SelectedCards: any[] = [];
@@ -20,6 +24,9 @@ export class GhostContainerComponent implements OnInit {
     // send to player
     // tell hand to remove SelectedCards
     // tell hand to redraw 
+
+    this.handComponent.removeSelectedCards();
+    this.handComponent.fillHand();
 
     this.SelectedCards = [];
   }
