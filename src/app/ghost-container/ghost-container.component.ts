@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HandComponent } from '../hand/hand.component';
+import { SocketService } from '../socket.service';
 
 @Component({
   selector: 'app-ghost-container',
@@ -8,6 +9,7 @@ import { HandComponent } from '../hand/hand.component';
 })
 
 export class GhostContainerComponent implements OnInit {
+  socketService: SocketService;
 
   @ViewChild(HandComponent)
   private handComponent: HandComponent;
@@ -15,12 +17,16 @@ export class GhostContainerComponent implements OnInit {
   psychics = new Array<String>('1', '2', '3');
   SelectedCards: any[] = [];
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(socketService: SocketService) { 
+    console.log('in the constructor of ghost container');
+    this.socketService = socketService;
+    this.socketService.startSession();
   }
 
+  ngOnInit() { }
+
   sendVisions(imageNumber: String) {
+    this.socketService.sendMessage('test');
     // send to player
     // tell hand to remove SelectedCards
     // tell hand to redraw 
