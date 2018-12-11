@@ -1,3 +1,13 @@
-<p>
-  ghost-container works!
-</p>
+<div style="display: flex;">
+    <app-clock></app-clock>
+    <app-raven [Number]="3"></app-raven>
+</div>
+
+<div style="width: 1000px; flex-direction: row; display: flex;">
+    <app-psychic-complete-vision 
+        *ngFor="let psychic of psychics; index as i; first as isFirst" 
+        [imageNumber]="psychic">
+    </app-psychic-complete-vision>
+</div>
+
+<app-hand [Size]="7"></app-hand>

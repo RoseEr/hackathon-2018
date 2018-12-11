@@ -1,3 +1,3 @@
-<p>
-  raven works!
-</p>
+<div style="display: flex;">
+    <img *ngFor="let raven of Ravens; index as i; first as isFirst" [src]="raven" style="width: auto; height: 250px;"/>
+  </div>
