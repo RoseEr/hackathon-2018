@@ -10,8 +10,7 @@ export class HandComponent implements OnInit {
   @Input() Size: string;
   @Input() SelectedCards: any[];
 
-  //SelectedCards: Array<Number>;
-  //SelectedCards: any[] = [];
+  
   Cards = new Array<String>();
   AvailableVisions = new Array<Number>();
 
