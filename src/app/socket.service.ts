@@ -21,9 +21,10 @@ export class SocketService {
 		this.socket.send(message);
 	}
 
-	public receiveMessage() {
+	public receiveMessage(callback: (inboundMessage) => void) {
 		this.socket.onmessage = (message) => {
-      console.log('received message: ' + message);
+			console.log('received message: ' + message);
+			callback(message);
 		};
 	}
 
@@ -33,7 +34,7 @@ export class SocketService {
   }
   
 	private createSocket(): WebSocket {
-		const HOST = location.origin.replace(/^http/, 'ws').replace(/^3000/, '8080');
+		const HOST = location.origin.replace(/^http/, 'ws');
 		const ws = new WebSocket(HOST);
 		return ws;
 	}

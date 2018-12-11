@@ -21,6 +21,9 @@ export class GhostContainerComponent implements OnInit {
     console.log('in the constructor of ghost container');
     this.socketService = socketService;
     this.socketService.startSession();
+    this.socketService.receiveMessage((inboundMessage) => {
+			console.log(inboundMessage);
+		});
   }
 
   ngOnInit() { }

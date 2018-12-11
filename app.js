@@ -31,20 +31,34 @@ app.use(function(err, req, res, next) {
 });
 
 const server = http.createServer(app);
-server.listen(process.env.PORT || 8999, () => {
+server.listen(process.env.PORT || 3001, () => {
   console.log(`Server started on port ${server.address().port} :)`);
 });
 
 const wss = new WebSocket.Server({ server });
 
+let psychics = {};
+let ghost = {};
+
 wss.on('connection', function connection(ws) {
   console.log('connection made');
   ws.on('message', function incoming(message) {
+    const messageObject = JSON.parse(message);
+
+    if (messageObject.type === 'new-connection') {
+      var playerId = messageObject.playerId;
+      if (messageObject.isGhost) {
+        ghost = ws;
+      } else {
+        pyschics[playerId] = ws;
+      }
+    }
+
     console.log('received: %s', message);
     ws.send('sending response');
   });
  
-  ws.send('something');
+  ws.send('Hi there, I am a WebSocket server');
 });
 
 module.exports = app;
