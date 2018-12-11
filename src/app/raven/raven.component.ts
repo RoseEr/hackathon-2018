@@ -10,6 +10,7 @@ export class RavenComponent implements OnInit {
   @Input() Number: string;
 
   Ravens = new Array<String>();
+  ClickedRavens: any[] = [];
 
   constructor() { }
 
@@ -19,6 +20,10 @@ export class RavenComponent implements OnInit {
       this.Ravens.push('../../assets/misc/raven.png');
       i++;
     } while(i <= parseInt(this.Number));
+  }
+
+  clickRaven(raven) {
+    this.ClickedRavens[raven] = !this.ClickedRavens[raven];
   }
 
 }

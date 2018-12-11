@@ -9,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class GhostContainerComponent implements OnInit {
 
   psychics = new Array<String>('1', '2', '3');
+  SelectedCards: any[] = [];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  sendVisions(imageNumber: String) {
+    // send to player
+    // tell hand to remove SelectedCards
+    // tell hand to redraw 
+
+    this.SelectedCards = [];
   }
 
 }

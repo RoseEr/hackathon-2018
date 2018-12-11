@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-psychic-complete-vision',
@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PsychicCompleteVisionComponent implements OnInit {
 
   @Input() imageNumber: String;
+  @Output() wasClicked = new EventEmitter<String>();
 
   characterImage: String;
   locationImage: String;
@@ -23,5 +24,7 @@ export class PsychicCompleteVisionComponent implements OnInit {
     this.psychicImage = '../../assets/psychics/pi' + this.imageNumber + '.png';
   }
 
-
+  psychicClicked() {
+    this.wasClicked.emit(this.imageNumber);
+  }
 }

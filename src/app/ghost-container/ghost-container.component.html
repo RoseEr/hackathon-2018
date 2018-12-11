@@ -6,8 +6,9 @@
 <div style="width: 1000px; flex-direction: row; display: flex;">
     <app-psychic-complete-vision 
         *ngFor="let psychic of psychics; index as i; first as isFirst" 
-        [imageNumber]="psychic">
+        [imageNumber]="psychic"
+        (wasClicked)="sendVisions($event)">
     </app-psychic-complete-vision>
 </div>
 
-<app-hand [Size]="7"></app-hand>
+<app-hand [Size]="7" [SelectedCards]="SelectedCards"></app-hand>
