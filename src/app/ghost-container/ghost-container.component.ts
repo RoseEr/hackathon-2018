@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HandComponent } from '../hand/hand.component';
 import { SocketService } from '../socket.service';
 
 @Component({
@@ -9,6 +10,10 @@ import { SocketService } from '../socket.service';
 
 export class GhostContainerComponent implements OnInit {
   socketService: SocketService;
+
+  @ViewChild(HandComponent)
+  private handComponent: HandComponent;
+
   psychics = new Array<String>('1', '2', '3');
   SelectedCards: any[] = [];
 
@@ -25,6 +30,9 @@ export class GhostContainerComponent implements OnInit {
     // send to player
     // tell hand to remove SelectedCards
     // tell hand to redraw 
+
+    this.handComponent.removeSelectedCards();
+    this.handComponent.fillHand();
 
     this.SelectedCards = [];
   }
