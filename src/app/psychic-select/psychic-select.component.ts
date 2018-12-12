@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../socket.service';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-psychic-select',
@@ -9,6 +9,9 @@ import {Router} from "@angular/router";
 })
 export class PsychicSelectComponent implements OnInit {
   socketService: SocketService;
+  isNotSelected: Boolean = true;
+  showGhost: Boolean = false;
+  showPsychic: Boolean = false;
 
   constructor(socketService: SocketService, private router: Router) { 
     this.socketService = socketService;
@@ -17,16 +20,6 @@ export class PsychicSelectComponent implements OnInit {
       var messageObject = JSON.parse(inboundMessage.data);
       if (messageObject.type === "welcome") {
         console.log('socket open');
-      }
-
-      if (messageObject.type === "player-creation") {
-        console.log('player-creation response, ' + messageObject);
-      }
-      if (messageObject.type === "new-player") {
-        console.log('new-player response, ' + messageObject);
-      }
-      if (messageObject.type === "ghost-creation") {
-        console.log('new-player response, ' + messageObject);
       }
 		});
   }
@@ -40,9 +33,13 @@ export class PsychicSelectComponent implements OnInit {
     }
     this.socketService.sendMessage(JSON.stringify(message));
     
-    console.log('navigating to ghost');
-    this.router.navigateByUrl('/ghost');
+    this.isNotSelected = false;
+    if (selection === 'ghost') {
+      this.showGhost = true;
+    } else {
+      this.showPsychic = true;
+    }
+
     console.log(selection);
   }
-
 }

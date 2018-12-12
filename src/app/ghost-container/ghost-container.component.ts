@@ -20,28 +20,39 @@ export class GhostContainerComponent implements OnInit {
   constructor(socketService: SocketService) { 
     console.log('in the constructor of ghost container');
     this.socketService = socketService;
-    this.socketService.startSession();
     this.socketService.receiveMessage((inboundMessage) => {
       var messageObject = JSON.parse(inboundMessage.data);
-      if (messageObject.type === "welcome") {
-        var psychics = new Array<Object>();
-        this.psychics.forEach(psychic => {
-          var p = {
-            "id": psychic,
-            "person": '../../assets/characters/char' + psychic.toString() + '.jpg',
-            "place": '../../assets/locations/lc' + psychic.toString() + '.jpg',
-            "thing": '../../assets/objects/oc' + psychic.toString() + '.jpg'
+
+      if (messageObject.type === "new-player") {
+          /* Example JSON {
+            'type': 'new-player',
+            'psychic': {
+              'person': 12,
+              'place': 3,
+              'thing': 1
+            }
           }
-          psychics.push(p);
-        });
-    
-        var message = {
-          "playerId": 'ghost',
-          "type": 'new-connection',
-          "psychics": psychics
-        }
-        console.log('sending message');
-        this.socketService.sendMessage(JSON.stringify(message));
+          */
+        
+        console.log('new-player response, ' + messageObject);
+      }
+      if (messageObject.type === "ghost-creation") {
+        console.log('new-player response, ' + messageObject);
+          /* Example JSON {
+            'type': 'new-player',
+            'psychic': [{
+              'person': 12,
+              'place': 3,
+              'thing': 1
+            },
+            {
+              'person': 1,
+              'place': 13,
+              'thing': 5
+            },
+            ]
+          }
+          */
       }
 		});
   }

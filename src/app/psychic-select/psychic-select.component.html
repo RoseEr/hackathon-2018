@@ -1,16 +1,21 @@
-<h1>Please select your role!</h1>
-
-<div class="icons">
-    <div class="tooltip">
-        <img [src]="'../../assets/misc/ghostIcon.png'" class="tooltip" style="width: auto; height: 150px; cursor: pointer;" (click)="playerSelectionClicked('ghost')"/>
-        <span class="tooltiptext">Play as Ghost</span>
-    </div>
+<div *ngIf="isNotSelected">
+    <h1>Please select your role!</h1>
     
-    <div class="tooltip">
-        <img [src]="'../../assets/misc/psychicIcon.png'" class="tooltip" style="width: auto; height: 150px; cursor: pointer;" (click)="playerSelectionClicked('psychic')"/>
-        <span class="tooltiptext">Play as Psychic</span>
+    <div class="icons">
+        <div class="tooltip">
+            <img [src]="'../../assets/misc/ghostIcon.png'" class="tooltip" style="width: auto; height: 150px; cursor: pointer;" (click)="playerSelectionClicked('ghost')"/>
+            <span class="tooltiptext">Play as Ghost</span>
+        </div>
+        
+        <div class="tooltip">
+            <img [src]="'../../assets/misc/psychicIcon.png'" class="tooltip" style="width: auto; height: 150px; cursor: pointer;" (click)="playerSelectionClicked('psychic')"/>
+            <span class="tooltiptext">Play as Psychic</span>
+        </div>
     </div>
 </div>
+
+<app-ghost-container *ngIf="showGhost"></app-ghost-container>
+<app-psychic-container *ngIf="showPsychic"></app-psychic-container>
 
 
 

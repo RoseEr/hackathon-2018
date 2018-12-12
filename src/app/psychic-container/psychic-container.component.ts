@@ -8,28 +8,38 @@ import { SocketService } from '../socket.service';
 })
 export class PsychicContainerComponent implements OnInit {
   socketService: SocketService;
-  Cards = new Array<Number>();
+  Visions = new Array<Number>();
+  People = new Array<Number>();
+  Places = new Array<Number>();
+  Things = new Array<Number>();
+  PlayerId = Number;
 
   constructor(socketService: SocketService) { 
     this.socketService = socketService;
-    this.socketService.startSession();
-    this.socketService.receiveMessage((inboundMessage) => {
-			console.log(inboundMessage);
-    });
     this.socketService.receiveMessage((inboundMessage) => {
       var messageObject = JSON.parse(inboundMessage.data);
       if (messageObject.type === "send-cards") {
-        this.Cards = messageObject.cards;
+        this.Visions = messageObject.cards;
       }
-      if (messageObject.type === "welcome") {
-        var message = {
-          "playerId": '1',
-          "type": 'new-connection'
-        }
-        this.socketService.sendMessage(JSON.stringify(message));
+      
+      if (messageObject.type === "player-creation") {
+        this.PlayerId = messageObject.id;
+        this.People = messageObject.people;
+        this.Places = messageObject.places;
+        this.Things = messageObject.things;
+        console.log('player-creation response, ' + messageObject);
       }
 		});
   }
 
   ngOnInit() { }
+
+  sendGuess(guess) {
+    var message = {
+      "type": "psychic-guess",
+      "playerId": this.PlayerId,
+      "guess": guess
+    }
+    this.socketService.sendMessage(JSON.stringify(message));
+  }
 }
