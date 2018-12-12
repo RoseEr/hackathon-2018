@@ -22,17 +22,37 @@ export class GhostContainerComponent implements OnInit {
     this.socketService = socketService;
     this.socketService.startSession();
     this.socketService.receiveMessage((inboundMessage) => {
-			console.log(inboundMessage);
+      var messageObject = JSON.parse(inboundMessage.data);
+      if (messageObject.type === "welcome") {
+        var psychics = new Array<Object>();
+        this.psychics.forEach(psychic => {
+          var p = {
+            "id": psychic,
+            "person": '../../assets/characters/char' + psychic.toString() + '.jpg',
+            "place": '../../assets/locations/lc' + psychic.toString() + '.jpg',
+            "thing": '../../assets/objects/oc' + psychic.toString() + '.jpg'
+          }
+          psychics.push(p);
+        });
+    
+        var message = {
+          "playerId": 'ghost',
+          "type": 'new-connection',
+          "psychics": psychics
+        }
+        console.log('sending message');
+        this.socketService.sendMessage(JSON.stringify(message));
+      }
 		});
   }
 
   ngOnInit() { }
 
   sendVisions(imageNumber: String) {
-    this.socketService.sendMessage('test');
     // send to player
     // tell hand to remove SelectedCards
     // tell hand to redraw 
+    console.log(this.SelectedCards);
 
     this.handComponent.removeSelectedCards();
     this.handComponent.fillHand();

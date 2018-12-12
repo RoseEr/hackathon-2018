@@ -23,7 +23,7 @@ export class SocketService {
 
 	public receiveMessage(callback: (inboundMessage) => void) {
 		this.socket.onmessage = (message) => {
-			console.log('received message: ' + message);
+			console.log('received message: ', message);
 			callback(message);
 		};
 	}

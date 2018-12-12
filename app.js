@@ -37,7 +37,8 @@ server.listen(process.env.PORT || 3001, () => {
 
 const wss = new WebSocket.Server({ server });
 
-let psychics = {};
+
+let allPsychics = [];
 let ghost = {};
 
 wss.on('connection', function connection(ws) {
@@ -47,18 +48,35 @@ wss.on('connection', function connection(ws) {
 
     if (messageObject.type === 'new-connection') {
       var playerId = messageObject.playerId;
-      if (messageObject.isGhost) {
+      if (playerId === 'ghost') {
         ghost = ws;
-      } else {
-        pyschics[playerId] = ws;
-      }
-    }
+        messageObject.psychics.forEach(psychic => {
+          var p = {
+            "ws": {},
+            "id": psychic.id,
+            "person": psychic.person,
+            "place": psychic.place,
+            "thing": psychic.thing
+          }
 
-    console.log('received: %s', message);
-    ws.send('sending response');
+          allPsychics[psychic.id] = p;
+        });
+      } else {
+        allPsychics[playerId]["ws"] = ws;
+      }
+
+      var response = {
+        "psychics": allPsychics
+      }
+      console.log('response, ', response);
+      ws.send(JSON.stringify(response));
+    }
   });
  
-  ws.send('Hi there, I am a WebSocket server');
+  var welcomeMessage = {
+    "type": "welcome"
+  }
+  ws.send(JSON.stringify(welcomeMessage));
 });
 
 module.exports = app;
