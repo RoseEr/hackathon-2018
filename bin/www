@@ -1,19 +1,69 @@
 #!/usr/bin/env node
 
 var app = require('../app');
-var debug = require('debug')('mean-angular6:server');
+var debug = require('debug')('hackathon');
 var http = require('http');
+const WebSocket = require('ws');
+
 
 // Get port from environment and store in Express.
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 var server = http.createServer(app);
-
 // Listen on provided port, on all network interfaces.
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+const wss = new WebSocket.Server({ server });
+
+let allPsychics = [];
+let ghost = {};
+
+wss.on('connection', function connection(ws) {
+  console.log('connection made');
+  ws.on('message', function incoming(message) {
+    const messageObject = JSON.parse(message);
+
+    if (messageObject.type === 'new-connection') {
+      var playerId = messageObject.playerId;
+      if (playerId === 'ghost') {
+        ghost = ws;
+        messageObject.psychics.forEach(psychic => {
+          var p = {
+            "ws": {},
+            "id": psychic.id,
+            "person": psychic.person,
+            "place": psychic.place,
+            "thing": psychic.thing
+          }
+
+          allPsychics[psychic.id] = p;
+        });
+      } else {
+        allPsychics[playerId]["ws"] = ws;
+      }
+
+      var response = {
+        "psychics": allPsychics
+      }
+      console.log('response, ', response);
+      ws.send(JSON.stringify(response));
+    }
+
+    if (messageObject.type === 'send-cards') {
+      console.log('Send Card Message Cards: ', messageObject.cards);
+      if (allPsychics[messageObject.player]) {
+        allPsychics[messageObject.player]["ws"].send(JSON.stringify(messageObject));
+      }
+    }
+  });
+ 
+  var welcomeMessage = {
+    "type": "welcome"
+  }
+  ws.send(JSON.stringify(welcomeMessage));
+});
 
 // Normalize a port into a number, string, or false.
 function normalizePort(val) {
