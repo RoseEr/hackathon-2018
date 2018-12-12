@@ -10,6 +10,11 @@ export class PsychicSelectComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  playerSelectionClicked(selection) {
+    console.log(selection);
   }
 
 }

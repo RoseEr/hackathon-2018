@@ -5,6 +5,7 @@
 .tooltip {
     position: relative;
     display: inline-block;
+    margin-right: 20px;
 }
 
 .tooltip .tooltiptext {
