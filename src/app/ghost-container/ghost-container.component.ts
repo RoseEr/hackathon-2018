@@ -53,11 +53,20 @@ export class GhostContainerComponent implements OnInit {
     // tell hand to remove SelectedCards
     // tell hand to redraw 
     console.log(this.SelectedCards);
+    console.log('imageNumber, ', imageNumber);
 
-    this.handComponent.removeSelectedCards();
+    var cardsToSend = this.handComponent.removeSelectedCards();
     this.handComponent.fillHand();
 
     this.SelectedCards = [];
+
+    var message = {
+      "cards": cardsToSend,
+      "player": imageNumber,
+      "type": "send-cards"
+    }
+
+    this.socketService.sendMessage(JSON.stringify(message));
   }
 
 }

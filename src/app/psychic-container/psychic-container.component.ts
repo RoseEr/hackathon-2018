@@ -8,6 +8,7 @@ import { SocketService } from '../socket.service';
 })
 export class PsychicContainerComponent implements OnInit {
   socketService: SocketService;
+  Cards = new Array<Number>();
 
   constructor(socketService: SocketService) { 
     this.socketService = socketService;
@@ -15,15 +16,20 @@ export class PsychicContainerComponent implements OnInit {
     this.socketService.receiveMessage((inboundMessage) => {
 			console.log(inboundMessage);
     });
+    this.socketService.receiveMessage((inboundMessage) => {
+      var messageObject = JSON.parse(inboundMessage.data);
+      if (messageObject.type === "send-cards") {
+        this.Cards = messageObject.cards;
+      }
+      if (messageObject.type === "welcome") {
+        var message = {
+          "playerId": '1',
+          "type": 'new-connection'
+        }
+        this.socketService.sendMessage(JSON.stringify(message));
+      }
+		});
   }
 
   ngOnInit() { }
-
-  startConnection() {
-    var message = {
-      "playerId": 'psychic1',
-      "type": 'new-connection'
-    }
-    this.socketService.sendMessage(JSON.stringify(message));
-  }
 }

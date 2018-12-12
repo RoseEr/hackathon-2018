@@ -71,6 +71,13 @@ wss.on('connection', function connection(ws) {
       console.log('response, ', response);
       ws.send(JSON.stringify(response));
     }
+
+    if (messageObject.type === 'send-cards') {
+      console.log('Send Card Message Cards: ', messageObject.cards);
+      if (allPsychics[messageObject.player]) {
+        allPsychics[messageObject.player]["ws"].send(JSON.stringify(messageObject));
+      }
+    }
   });
  
   var welcomeMessage = {
