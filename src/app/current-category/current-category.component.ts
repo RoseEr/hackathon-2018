@@ -43,8 +43,8 @@ export class CurrentCategoryComponent implements OnInit {
           console.log('Default.');
           this.CategoryImages.push('../../assets/characters/char' + this.AvailableImages[randImage - 1] + '.jpg');
       }
-      //this.CategoryImages.push('../../assets/visions/cc' + this.AvailableImages[randImage - 1] + '.jpg');
 
+      
       this.AvailableImages.splice((randImage - 1), 1);
     }
   }

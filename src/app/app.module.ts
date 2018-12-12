@@ -15,7 +15,8 @@ import { CardCollectionComponent } from './card-collection/card-collection.compo
 
 const appRoutes: Routes = [
   { path: 'psychic', component: PsychicContainerComponent },
-  { path: 'ghost', component: GhostContainerComponent }
+  { path: 'ghost', component: GhostContainerComponent },
+  { path: 'playerSelect', component: PsychicSelectComponent }
 ];
 
 
