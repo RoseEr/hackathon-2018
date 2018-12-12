@@ -52,9 +52,6 @@ export class GhostContainerComponent implements OnInit {
     // send to player
     // tell hand to remove SelectedCards
     // tell hand to redraw 
-    console.log(this.SelectedCards);
-    console.log('imageNumber, ', imageNumber);
-
     var cardsToSend = this.handComponent.removeSelectedCards();
     this.handComponent.fillHand();
 

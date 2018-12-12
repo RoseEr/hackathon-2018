@@ -5,7 +5,6 @@ var debug = require('debug')('hackathon');
 var http = require('http');
 const WebSocket = require('ws');
 
-
 // Get port from environment and store in Express.
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -17,44 +16,114 @@ server.on('error', onError);
 server.on('listening', onListening);
 const wss = new WebSocket.Server({ server });
 
+
 let allPsychics = [];
 let ghost = {};
+let availablePeople = [];
+let availablePlaces = [];
+let availableThings = [];
+let possiblePeople = [];
+let possiblePlaces = [];
+let possibleThings = [];
+
+for(var x = 1; x <= 18; x++) {
+  availablePeople.push(x);
+  availablePlaces.push(x);
+  availableThings.push(x);
+}
+availablePlaces.push(19);
+
+while(possiblePeople.length < 6) {
+  var randomNum = Math.floor(Math.random() * availablePeople.length) + 1;
+
+  possiblePeople.push(randomNum);
+  availablePeople.splice((randomNum - 1), 1);
+}
+
+while(possiblePlaces.length < 6) {
+  var randomNum = Math.floor(Math.random() * availablePlaces.length) + 1;
+
+  possiblePlaces.push(randomNum);
+  availablePlaces.splice((randomNum - 1), 1);
+}
+
+while(possibleThings.length < 6) {
+  var randomNum = Math.floor(Math.random() * availableThings.length) + 1;
+
+  possibleThings.push(randomNum);
+  availableThings.splice((randomNum - 1), 1);
+}
+
 
 wss.on('connection', function connection(ws) {
   console.log('connection made');
+
   ws.on('message', function incoming(message) {
     const messageObject = JSON.parse(message);
-
-    if (messageObject.type === 'new-connection') {
-      var playerId = messageObject.playerId;
-      if (playerId === 'ghost') {
-        ghost = ws;
-        messageObject.psychics.forEach(psychic => {
-          var p = {
-            "ws": {},
-            "id": psychic.id,
-            "person": psychic.person,
-            "place": psychic.place,
-            "thing": psychic.thing
-          }
-
-          allPsychics[psychic.id] = p;
-        });
-      } else {
-        allPsychics[playerId]["ws"] = ws;
-      }
-
-      var response = {
-        "psychics": allPsychics
-      }
-      console.log('response, ', response);
-      ws.send(JSON.stringify(response));
-    }
 
     if (messageObject.type === 'send-cards') {
       console.log('Send Card Message Cards: ', messageObject.cards);
       if (allPsychics[messageObject.player]) {
         allPsychics[messageObject.player]["ws"].send(JSON.stringify(messageObject));
+      }
+    }
+
+    if (messageObject.type === 'player-selection') {
+      console.log('player-select: ', messageObject);
+      
+      // Ghost connection
+      if (messageObject.selection === 'ghost') {
+        ghost = ws;
+        // If players already connected, send to ghost
+        if (allPsychics.length !== 0) {
+          var returnPsychics = [];
+
+          allPsychics.forEach(p => {
+            returnPsychics.push(p.psychic);
+          });
+
+          var ghostMessage = {
+            'type': 'ghost-creation',
+            'psychics': returnPsychics
+          }
+          ghost.send(JSON.stringify(ghostMessage));
+        }
+      // Psychic connection
+      } else if (messageObject.selection === 'psychic') {
+        var randomPerson = Math.floor(Math.random() * 5);
+        var randomPlace = Math.floor(Math.random() * 5);
+        var randomThing = Math.floor(Math.random() * 5);
+
+        var psychic = {
+          'ws': ws,
+          'psychic': {
+            'person': possiblePeople[randomPerson],
+            'place': possiblePlaces[randomPlace],
+            'thing': possibleThings[randomThing]
+          }
+        };
+
+        // Persist the psychic
+        allPsychics.push(psychic);
+
+        // If we have a ghost, send them the player
+        if (ghost.send) {
+          var ghostMessage = {
+            'type': 'new-player',
+            'psychic': psychic.psychic
+          }
+          ghost.send(JSON.stringify(ghostMessage));
+        }
+
+        // Send a response to the psychic
+        var response = {
+          'type': 'player-creation',
+          'id': allPsychics.length + 1,
+          'people': possiblePeople,
+          'places': possiblePlaces,
+          'things': possibleThings,
+        };
+        ws.send(JSON.stringify(response));
       }
     }
   });

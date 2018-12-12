@@ -14,11 +14,11 @@ import { CurrentCategoryComponent } from './current-category/current-category.co
 import { CardCollectionComponent } from './card-collection/card-collection.component';
 
 const appRoutes: Routes = [
+  { path: '**', redirectTo: '/playerSelect'},
   { path: 'psychic', component: PsychicContainerComponent },
   { path: 'ghost', component: GhostContainerComponent },
   { path: 'playerSelect', component: PsychicSelectComponent }
 ];
-
 
 @NgModule({
   declarations: [
