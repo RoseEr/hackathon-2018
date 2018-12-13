@@ -10,6 +10,20 @@
     height: auto;
 }
 
+.peopleThings {
+    width: 385px; 
+    height: 250px;
+
+    border-radius: 5%;
+}
+
+.objects {
+    width: 150px;
+    height: auto;
+
+    border-radius: 5%;
+}
+
 /* The overlay effect (full height and width) - lays on top of the container and over the image */
 .overlayCorrect {
     position: absolute;

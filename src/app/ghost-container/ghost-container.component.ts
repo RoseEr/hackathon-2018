@@ -64,7 +64,7 @@ export class GhostContainerComponent implements OnInit {
       "type": "send-cards"
     }
 
-    console.log('sending cards: ', message);
+    console.log('sending visions', message);
     this.socketService.sendMessage(JSON.stringify(message));
   }
 
