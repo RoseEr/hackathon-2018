@@ -7,7 +7,7 @@ import { Psychic } from '../psychic';
   styleUrls: ['./psychic-complete-vision.component.css']
 })
 export class PsychicCompleteVisionComponent implements OnInit {
-  private _psychic: Psychic;
+  _psychic: Psychic;
 
   @Input() imageNumber: String;
   @Input()
