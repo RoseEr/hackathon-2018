@@ -12,6 +12,8 @@ export class PsychicContainerComponent implements OnInit {
   People = new Array<Number>();
   Places = new Array<Number>();
   Things = new Array<Number>();
+  CurrentCategory = new Array<Number>();
+  CategoryType: string;
   PlayerId = Number;
   GuessNumber = Number;
 
@@ -28,16 +30,21 @@ export class PsychicContainerComponent implements OnInit {
         this.People = messageObject.people;
         this.Places = messageObject.places;
         this.Things = messageObject.things;
+        this.CurrentCategory = this.People;
+        this.CategoryType = 'characters';
         console.log('player-creation response, ', messageObject);
       }
 
       if (messageObject.type === 'guess-response') {
-        // check if messageObject.isCorrect
-
-        // if no, grey out the image at this.guessNumber value
-
-        // if yes, move on to the next category
-        // person -> place -> thing -> ?????
+        if (messageObject.isCorrect && messageObject.category === 'person') {
+          this.CurrentCategory = this.Places;
+          this.CategoryType = 'locations';
+          console.log('updating category and type: ', this.CurrentCategory, this.CategoryType);
+        } else if (messageObject.isCorrect && messageObject.category === 'place') {
+          this.CurrentCategory = this.Things;
+          this.CategoryType = 'objects';
+          console.log('updating category and type: ', this.CurrentCategory, this.CategoryType);
+        }
       }
 		});
   }

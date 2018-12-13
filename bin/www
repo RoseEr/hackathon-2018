@@ -30,7 +30,6 @@ for(var x = 1; x <= 18; x++) {
   totalPlaces.push(x);
   totalThings.push(x);
 }
-totalPlaces.push(19);
 
 while(possiblePeople.length < 6) {
   var randomIndex = Math.floor(Math.random() * totalPeople.length);
@@ -87,16 +86,19 @@ wss.on('connection', function connection(ws) {
           // check person first if it hasn't been guessed yet
           if (!psychic.psychic.person.isGuessed) {
             // Are we correct?
+            psychic.psychic.person.isGuessed = messageObject.guess === psychic.psychic.person.id;
             response['isCorrect'] = messageObject.guess === psychic.psychic.person.id;
             response['category'] = 'person';
 
           // next, we then check places
           } else if (!psychic.psychic.place.isGuessed) {
+            psychic.psychic.place.isGuessed = messageObject.guess === psychic.psychic.place.id;
             response['isCorrect'] = messageObject.guess === psychic.psychic.place.id;
             response['category'] = 'place';
           
           // last, we then check things
           } else if (!psychic.psychic.thing.isGuessed) {
+            psychic.psychic.thing.isGuessed = messageObject.guess === psychic.psychic.thing.id;
             response['isCorrect'] = messageObject.guess === psychic.psychic.thing.id;
             response['category'] = 'thing';
           }
