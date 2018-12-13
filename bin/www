@@ -18,39 +18,45 @@ const wss = new WebSocket.Server({ server });
 
 let allPsychics = [];
 let ghost = {};
-let availablePeople = [];
-let availablePlaces = [];
-let availableThings = [];
+let totalPeople = [];
+let totalPlaces = [];
+let totalThings = [];
 let possiblePeople = [];
 let possiblePlaces = [];
 let possibleThings = [];
 
 for(var x = 1; x <= 18; x++) {
-  availablePeople.push(x);
-  availablePlaces.push(x);
-  availableThings.push(x);
+  totalPeople.push(x);
+  totalPlaces.push(x);
+  totalThings.push(x);
 }
-availablePlaces.push(19);
+totalPlaces.push(19);
 
 while(possiblePeople.length < 6) {
-  var randomNum = Math.floor(Math.random() * availablePeople.length) + 1;
+  var randomIndex = Math.floor(Math.random() * totalPeople.length);
 
-  possiblePeople.push(randomNum);
-  availablePeople.splice((randomNum - 1), 1);
+  if (possiblePeople.indexOf(totalPeople[randomIndex]) < 0) {
+    possiblePeople.push(totalPeople[randomIndex]);
+    totalPeople.splice((randomIndex - 1), 1);
+  }
 }
 
 while(possiblePlaces.length < 6) {
-  var randomNum = Math.floor(Math.random() * availablePlaces.length) + 1;
+  var randomIndex = Math.floor(Math.random() * totalPlaces.length);
 
-  possiblePlaces.push(randomNum);
-  availablePlaces.splice((randomNum - 1), 1);
+  if (possiblePlaces.indexOf(totalPlaces[randomIndex]) < 0) {
+    possiblePlaces.push(totalPlaces[randomIndex]);
+    totalPlaces.splice((randomIndex - 1), 1);
+  }
 }
 
 while(possibleThings.length < 6) {
-  var randomNum = Math.floor(Math.random() * availableThings.length) + 1;
+  var randomIndex = Math.floor(Math.random() * totalThings.length);
 
-  possibleThings.push(randomNum);
-  availableThings.splice((randomNum - 1), 1);
+  if (possibleThings.indexOf(totalThings[randomIndex]) < 0) {
+    possibleThings.push(totalThings[randomIndex]);
+    totalThings.splice((randomIndex - 1), 1);
+  }
 }
 
 

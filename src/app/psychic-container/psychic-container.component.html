@@ -3,9 +3,7 @@
 </div>
 
 <div style="max-width: 1500px; flex-direction: row; display: flex; flex-wrap: wrap;">
-  <app-current-category [Size]=6 [ImageType]="'characters'">
-
-  </app-current-category> 
+  <app-current-category [Size]=6 [ImageType]="'characters'" [CategoryImages]="People" (imageClicked)="guess($event)"></app-current-category> 
 </div>
 
 <app-hand [Size]="Visions.length" [Cards]="Visions"></app-hand>

@@ -13,6 +13,7 @@ export class PsychicContainerComponent implements OnInit {
   Places = new Array<Number>();
   Things = new Array<Number>();
   PlayerId = Number;
+  GuessNumber = Number;
 
   constructor(socketService: SocketService) { 
     this.socketService = socketService;
@@ -29,12 +30,22 @@ export class PsychicContainerComponent implements OnInit {
         this.Things = messageObject.things;
         console.log('player-creation response, ', messageObject);
       }
+
+      if (messageObject.type === 'guess-response') {
+        // check if messageObject.isCorrect
+
+        // if no, grey out the image at this.guessNumber value
+
+        // if yes, move on to the next category
+        // person -> place -> thing -> ?????
+      }
 		});
   }
 
   ngOnInit() { }
 
   guess(guess) {
+    this.GuessNumber = guess;
     var message = {
       "type": "psychic-guess",
       "playerId": this.PlayerId,
