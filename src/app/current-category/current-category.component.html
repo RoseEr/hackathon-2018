@@ -1,3 +1,12 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
 <div style="display: flex; flex-wrap: wrap">
-  <img *ngFor="let image of _CategoryImages; index as i; first as isFirst" (click)="handleClick(image)" [src]="'../../assets/' + Category + image + '.jpg'" style="width: auto; height: 250px;" />
+    <div class="container" *ngFor="let image of _CategoryImages; index as i; first as isFirst">
+      <img (click)="handleClick(image)" [src]="'../../assets/' + Category + image + '.jpg'" style="width: 385px; height: 250px; border-radius: 5%" />
+      <div class="overlay">
+        <div class="icon" title="Check Mark">
+          <i class="fas fa-check"></i>    
+        </div>
+      </div>
+    </div>
 </div>

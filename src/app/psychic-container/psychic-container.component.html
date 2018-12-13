@@ -1,9 +1,12 @@
 <div style="display: flex;">
-  <app-clock (click)="guess(1)"></app-clock>
+  <app-clock></app-clock>
 </div>
 
 <div style="max-width: 1500px; flex-direction: row; display: flex; flex-wrap: wrap;">
   <app-current-category [Size]=6 [ImageType]="CategoryType" [CategoryImages]="CurrentCategory" (imageClicked)="guess($event)"></app-current-category> 
 </div>
 
-<app-hand [Size]="Visions.length" [Cards]="Visions"></app-hand>
+<div style="max-width: 1500px; flex-direction: row; display: flex;">
+    <app-hand [Size]="Visions.length" [Cards]="Visions"></app-hand>
+    <app-card-collection [AllVisions]="AllVisions"></app-card-collection>
+</div>
