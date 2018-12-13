@@ -1,14 +1,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
 <div style="display: flex; flex-wrap: wrap">
-    <div class="container" (click)="handleClick(image.cardNumber)" *ngFor="let image of _CategoryImages; index as i; first as isFirst">
-      <img [src]="'../../assets/' + Category + image.cardNumber + '.jpg'" style="width: 385px; height: 250px; border-radius: 5%" />
-
-      <div [class.overlayCorrect]="image.isCorrect == 1">
-        <div [class.icon]="image.isCorrect == 1" title="Check Mark">
-          <i [class.fas]="image.isCorrect == 1" [class.fa-check]="image.isCorrect == 1"></i>    
-        </div>
-      </div>
+    <div [ngClass]="image.cardType == 'thing' ? 'objects' : 'peopleThings'" class="container" (click)="handleClick(image.cardNumber)" *ngFor="let image of _CategoryImages; index as i; first as isFirst">
+      <img [src]="'../../assets/' + Category + image.cardNumber + '.jpg'" [ngClass]="image.cardType == 'thing' ? 'objects' : 'peopleThings'" />
 
       <div [class.overlayIncorrect]="image.isCorrect == -1">
         <div [class.icon]="image.isCorrect == -1" title="X Mark">

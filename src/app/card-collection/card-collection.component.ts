@@ -8,10 +8,24 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CardCollectionComponent implements OnInit {
   @Input() AllVisions = new Array<Number>();
 
-  constructor() { }
+  private showModal : Boolean;
+
+  constructor() {
+    this.showModal = false;
+  }
 
   ngOnInit() {
-    
+    for(var i = 1; i < 10; i++) {
+      this.AllVisions.push(i);
+    }
+  }
+
+  hideModal() {
+    this.showModal = false;
+  }
+
+  openModal() {
+    this.showModal = true;
   }
 
 }

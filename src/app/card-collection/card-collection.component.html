@@ -1,1 +1,13 @@
-<img style="border-radius: 5%;" [src]="'../../assets/misc/cardBack.png'" />
+<img (click)="openModal()" style="border-radius: 5%;" [src]="'../../assets/misc/cardBack.png'" />
+
+<!-- The Modal -->
+<div id="myModal" class="modal" [ngClass]="showModal ? 'showModal' : 'hideModal'">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span (click)="hideModal()" class="close">&times;</span>
+        <img *ngFor="let vision of AllVisions; index as i; first as isFirst" [src]="'../../assets/visions/cc' + vision + '.jpg'" style="width: auto; height: 250px;" />
+    </div>
+      
+</div>
+
