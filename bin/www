@@ -66,10 +66,20 @@ wss.on('connection', function connection(ws) {
     const messageObject = JSON.parse(message);
 
     if (messageObject.type === 'send-cards') {
-      console.log('Send Card Message Cards: ', messageObject.cards);
-      if (allPsychics[messageObject.player]) {
-        allPsychics[messageObject.player]["ws"].send(JSON.stringify(messageObject));
-      }
+      console.log('messageObject: ', messageObject);
+      allPsychics.forEach(p => {
+        const psych = p.psychic;
+
+        console.log('playerID: ', psych.id);
+        console.log('messageObject.player: ', messageObject.player);
+        console.log('===: ', psych.id === messageObject.player);
+        console.log('==: ', psych.id == messageObject.player);
+
+        if(p.psychic.id === messageObject.player) {
+          console.log('got matching psychic: ', p);
+          p.ws.send(JSON.stringify(messageObject));
+        }
+      })
     }
     
     if (messageObject.type === 'psychic-guess') {

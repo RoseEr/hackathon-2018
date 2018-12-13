@@ -6,7 +6,7 @@
 <div style="width: 1000px; flex-direction: row; display: flex;">
     <app-psychic-complete-vision 
         *ngFor="let psychic of psychics; index as i; first as isFirst" 
-        [imageNumber]="psychic"
+        [psychic]="psychic"
         (wasClicked)="sendVisions($event)">
     </app-psychic-complete-vision>
 </div>

@@ -39,11 +39,9 @@ export class PsychicContainerComponent implements OnInit {
           this.People.push(new CategoryCard(messageObject.people[i], 0));
         }
 
-
         for(i = 0; i < messageObject.places.length; i++) {
           this.Places.push(new CategoryCard(messageObject.places[i], 0));
         }
-
 
         for(i = 0; i < messageObject.things.length; i++) {
           this.Things.push(new CategoryCard(messageObject.things[i], 0));

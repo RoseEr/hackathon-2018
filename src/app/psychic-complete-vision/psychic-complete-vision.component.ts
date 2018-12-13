@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Psychic } from '../psychic';
 
 @Component({
   selector: 'app-psychic-complete-vision',
@@ -6,9 +7,19 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./psychic-complete-vision.component.css']
 })
 export class PsychicCompleteVisionComponent implements OnInit {
+  private _psychic: Psychic;
 
   @Input() imageNumber: String;
-  @Output() wasClicked = new EventEmitter<String>();
+  @Input()
+  set psychic(psychic: Psychic) {
+    console.log('psychic has changed', psychic);
+    this._psychic = psychic;
+    this.characterImage = '../../assets/characters/char' + psychic.person+ '.jpg';
+    this.locationImage = '../../assets/locations/lc' + psychic.place + '.jpg';
+    this.objectImage = '../../assets/objects/oc' + psychic.object + '.jpg';
+    this.psychicImage = '../../assets/psychics/pi' + psychic.playerId + '.png';
+  }
+  @Output() wasClicked = new EventEmitter<Number>();
 
   characterImage: String;
   locationImage: String;
@@ -17,14 +28,9 @@ export class PsychicCompleteVisionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.characterImage = '../../assets/characters/char' + this.imageNumber + '.jpg';
-    this.locationImage = '../../assets/locations/lc' + this.imageNumber + '.jpg';
-    this.objectImage = '../../assets/objects/oc' + this.imageNumber + '.jpg';
-    this.psychicImage = '../../assets/psychics/pi' + this.imageNumber + '.png';
-  }
+  ngOnInit() { }
 
   psychicClicked() {
-    this.wasClicked.emit(this.imageNumber);
+    this.wasClicked.emit(this._psychic.playerId);
   }
 }
