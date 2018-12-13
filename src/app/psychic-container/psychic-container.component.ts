@@ -70,7 +70,7 @@ export class PsychicContainerComponent implements OnInit {
               this.Places[i].isCorrect = -1;
             }
           }
-        } else if(!messageObject.isCorrect && messageObject.category === 'objects') {
+        } else if(!messageObject.isCorrect && messageObject.category === 'thing') {
           for(var i = 0; i < this.Things.length; i++) {
             if(this.Things[i].cardNumber == messageObject.guess) {
               this.Things[i].isCorrect = -1;
