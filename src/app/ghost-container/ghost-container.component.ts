@@ -26,11 +26,12 @@ export class GhostContainerComponent implements OnInit {
       if (messageObject.type === "new-player") {
         let p = messageObject.psychic;
         let psychic = new Psychic(
-          p.id, 
-          p.person.id, 
-          p.place.id, 
-          p.thing.id
+            p.id, 
+            p.person.id,
+            p.place.id, 
+            p.thing.id
           );
+
         this.psychics.push(psychic);
         console.log('new-player response ', messageObject);
       }
@@ -44,6 +45,18 @@ export class GhostContainerComponent implements OnInit {
       }
       if (messageObject.type === 'guess-response') {
         // {type: "guess-response", playerId: 1, category: "person", guess: 17, isCorrect: true}
+
+        for(var i = 0; i < this.psychics.length; i++) {
+          if(this.psychics[i].playerId == messageObject.playerId) {
+            if(messageObject.category == 'person') {
+              this.psychics[i].personCorrect = true;
+            } else if(messageObject.category == 'place') {
+              this.psychics[i].placeCorrect = true;
+            } else if(messageObject.category == 'thing') {
+              this.psychics[i].objectCorrect = true;
+            }
+          }
+        }
         console.log('player guess: ', messageObject);
       }
 		});

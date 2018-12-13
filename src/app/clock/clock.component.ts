@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-clock',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./clock.component.css']
 })
 export class ClockComponent implements OnInit {
+  @Input() ClockPosition : Number;
+
 
   constructor() { }
 

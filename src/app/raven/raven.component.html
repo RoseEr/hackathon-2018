@@ -1,3 +1,6 @@
 <div style="display: flex;">
-    <img *ngFor="let raven of Ravens; index as i; first as isFirst" [src]="raven" [class.hiddenRaven]="ClickedRavens[i]" style="width: auto; height: 250px;" (click)="clickRaven(i)"/>
+    <img *ngFor="let raven of Ravens; index as i; first as isFirst" [src]="raven" 
+      [class.hiddenRaven]="ClickedRavens[i]" 
+      style="width: auto; height: 100px;" 
+      (click)="clickRaven(i)"/>
   </div>

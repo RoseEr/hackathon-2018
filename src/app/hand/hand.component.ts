@@ -63,6 +63,10 @@ export class HandComponent implements OnInit {
     return returnCardIds;
   }
 
+  removeEntireHand() {
+    this.Cards = new Array<Number>(); 
+  }
+
   fillHand() {
     while(this.Cards.length < parseInt(this.Size)) {
       if(this.AvailableVisions.length == 0) {

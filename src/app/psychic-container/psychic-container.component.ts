@@ -20,6 +20,8 @@ export class PsychicContainerComponent implements OnInit {
 
   AllVisions = new Array<Number>();
 
+  NumberOfGuesses = 1;
+
   constructor(socketService: SocketService) { 
     this.socketService = socketService;
     this.socketService.receiveMessage((inboundMessage) => {
@@ -92,13 +94,19 @@ export class PsychicContainerComponent implements OnInit {
   ngOnInit() { }
 
   guess(guess) {
-    this.GuessNumber = guess;
-    var message = {
-      "type": "psychic-guess",
-      "playerId": this.PlayerId,
-      "guess": guess
+    if(this.NumberOfGuesses <= 7) {
+      this.GuessNumber = guess;
+      var message = {
+        "type": "psychic-guess",
+        "playerId": this.PlayerId,
+        "guess": guess
+      }
+      console.log('guessing', message);
+      this.socketService.sendMessage(JSON.stringify(message));
+  
+      if(this.NumberOfGuesses != 7) {
+        this.NumberOfGuesses ++;  
+      }
     }
-    console.log('guessing', message);
-    this.socketService.sendMessage(JSON.stringify(message));
   }
 }

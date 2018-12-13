@@ -15,9 +15,9 @@ export class CardCollectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    for(var i = 1; i < 10; i++) {
-      this.AllVisions.push(i);
-    }
+    // for(var i = 1; i < 10; i++) {
+    //   this.AllVisions.push(i);
+    // }
   }
 
   hideModal() {

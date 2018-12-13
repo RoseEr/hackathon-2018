@@ -1,10 +1,38 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
 <div style="flex-direction: column; width: 300px">
   <!-- characters
   locations
   objects -->
+  <div class="container">
+      <img src="{{characterImage}}" style="width: 100%; height: auto"/>
 
-  <img src="{{characterImage}}" style="width: 100%; height: auto"/>
-  <img src="{{locationImage}}" style="width: 100%; height: auto"/>
-  <img src="{{objectImage}}" style="width: 100%; height: auto"/>
+      <div [class.overlayCorrect]="_psychic.personCorrect">
+          <div [class.icon]="_psychic.personCorrect" title="CheckMark">
+            <i [class.fas]="_psychic.personCorrect" [class.fa-check]="_psychic.personCorrect"></i>
+          </div>
+      </div>
+  </div>
+
+  <div class="container">
+      <img src="{{locationImage}}" style="width: 100%; height: auto"/>
+
+      <div [class.overlayCorrect]="_psychic.placeCorrect">
+          <div [class.icon]="_psychic.placeCorrect" title="CheckMark">
+            <i [class.fas]="_psychic.placeCorrect" [class.fa-check]="_psychic.placeCorrect"></i>
+          </div>
+      </div>
+  </div>
+
+  <div class="container">
+      <img src="{{objectImage}}" style="width: 100%; height: auto"/>
+
+      <div [class.overlayCorrect]="_psychic.objectCorrect">
+          <div [class.icon]="_psychic.objectCorrect" title="CheckMark">
+            <i [class.fas]="_psychic.objectCorrect" [class.fa-check]="_psychic.objectCorrect"></i>
+          </div>
+      </div>
+  </div>
+
   <img src="{{psychicImage}}" style="width: 100%; height: auto; border-radius: 50%" (click)="psychicClicked()"/>
 </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { HandComponent } from '../hand/hand.component';
 
 @Component({
   selector: 'app-raven',
@@ -8,6 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class RavenComponent implements OnInit {
 
   @Input() Number: string;
+
+  @ViewChild(HandComponent)
+  private handComponent: HandComponent;
 
   Ravens = new Array<String>();
   ClickedRavens: any[] = [];
@@ -24,6 +28,9 @@ export class RavenComponent implements OnInit {
 
   clickRaven(raven) {
     this.ClickedRavens[raven] = !this.ClickedRavens[raven];
+
+    // this.handComponent.removeEntireHand();
+    // this.handComponent.fillHand();
   }
 
 }
