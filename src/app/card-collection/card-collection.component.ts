@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CardCollectionComponent implements OnInit {
   @Input() AllVisions = new Array<Number>();
 
-  private showModal : Boolean;
+  showModal : Boolean;
 
   constructor() {
     this.showModal = false;
