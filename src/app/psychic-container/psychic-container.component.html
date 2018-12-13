@@ -1,5 +1,5 @@
 <div style="display: flex;">
-  <app-clock></app-clock>
+  <app-clock (click)="guess(1)"></app-clock>
 </div>
 
 <div style="max-width: 1500px; flex-direction: row; display: flex; flex-wrap: wrap;">
@@ -8,4 +8,4 @@
   </app-current-category> 
 </div>
 
-<app-hand [Size]="Cards.length" [Cards]="Cards"></app-hand>
+<app-hand [Size]="Visions.length" [Cards]="Visions"></app-hand>

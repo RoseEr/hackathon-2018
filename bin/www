@@ -16,7 +16,6 @@ server.on('error', onError);
 server.on('listening', onListening);
 const wss = new WebSocket.Server({ server });
 
-
 let allPsychics = [];
 let ghost = {};
 let availablePeople = [];
@@ -67,6 +66,42 @@ wss.on('connection', function connection(ws) {
         allPsychics[messageObject.player]["ws"].send(JSON.stringify(messageObject));
       }
     }
+    
+    if (messageObject.type === 'psychic-guess') {
+      console.log('psychic: ' + messageObject.playerId + ' guessed: ' + messageObject.guess)
+      var response = {
+        'type': 'guess-response'
+      };
+      var psychicToRespondTo;
+
+      console.log('checking all psychics: ', allPsychics);
+      allPsychics.forEach(psychic => {
+        if(psychic.psychic.id === messageObject.playerId) {
+          psychicToRespondTo = psychic.ws;
+          // check person first if it hasn't been guessed yet
+          if (!psychic.psychic.person.isGuessed) {
+            // Are we correct?
+            response['isCorrect'] = messageObject.guess === psychic.psychic.person.id;
+            response['category'] = 'person';
+
+          // next, we then check places
+          } else if (!psychic.psychic.place.isGuessed) {
+            response['isCorrect'] = messageObject.guess === psychic.psychic.place.id;
+            response['category'] = 'place';
+          
+          // last, we then check things
+          } else if (!psychic.psychic.thing.isGuessed) {
+            response['isCorrect'] = messageObject.guess === psychic.psychic.thing.id;
+            response['category'] = 'thing';
+          }
+        }
+      });
+
+      if (psychicToRespondTo) {
+        console.log('sending respnose: ', response);
+        psychicToRespondTo.send(JSON.stringify(response));
+      }
+    } 
 
     if (messageObject.type === 'player-selection') {
       console.log('player-select: ', messageObject);
@@ -90,6 +125,7 @@ wss.on('connection', function connection(ws) {
         }
       // Psychic connection
       } else if (messageObject.selection === 'psychic') {
+        var playerId = allPsychics.length + 1;
         var randomPerson = Math.floor(Math.random() * 5);
         var randomPlace = Math.floor(Math.random() * 5);
         var randomThing = Math.floor(Math.random() * 5);
@@ -97,9 +133,19 @@ wss.on('connection', function connection(ws) {
         var psychic = {
           'ws': ws,
           'psychic': {
-            'person': possiblePeople[randomPerson],
-            'place': possiblePlaces[randomPlace],
-            'thing': possibleThings[randomThing]
+            'id': playerId,
+            'person': {
+              'id': possiblePeople[randomPerson],
+              'isGuessed': false
+            },
+            'place': {
+              'id': possiblePlaces[randomPlace],
+              'isGuessed': false
+            },
+            'thing': { 
+              'id': possibleThings[randomThing],
+              'isGuessed': false
+            }
           }
         };
 
@@ -118,7 +164,7 @@ wss.on('connection', function connection(ws) {
         // Send a response to the psychic
         var response = {
           'type': 'player-creation',
-          'id': allPsychics.length + 1,
+          'id': playerId,
           'people': possiblePeople,
           'places': possiblePlaces,
           'things': possibleThings,

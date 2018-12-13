@@ -27,19 +27,20 @@ export class PsychicContainerComponent implements OnInit {
         this.People = messageObject.people;
         this.Places = messageObject.places;
         this.Things = messageObject.things;
-        console.log('player-creation response, ' + messageObject);
+        console.log('player-creation response, ', messageObject);
       }
 		});
   }
 
   ngOnInit() { }
 
-  sendGuess(guess) {
+  guess(guess) {
     var message = {
       "type": "psychic-guess",
       "playerId": this.PlayerId,
       "guess": guess
     }
+    console.log('guessing', message);
     this.socketService.sendMessage(JSON.stringify(message));
   }
 }
