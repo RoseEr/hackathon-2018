@@ -5,7 +5,7 @@
   locations
   objects -->
   <div class="container">
-      <img src="{{characterImage}}" style="width: 100%; height: auto"/>
+      <img src="{{characterImage}}" style="width: 100%; height: auto; border-radius: 5%; margin-right: 10px;"/>
 
       <div [class.overlayCorrect]="_psychic.personCorrect">
           <div [class.icon]="_psychic.personCorrect" title="CheckMark">
@@ -15,7 +15,7 @@
   </div>
 
   <div class="container">
-      <img src="{{locationImage}}" style="width: 100%; height: auto"/>
+      <img src="{{locationImage}}" style="width: 100%; height: auto; border-radius: 5%; margin-right: 10px;"/>
 
       <div [class.overlayCorrect]="_psychic.placeCorrect">
           <div [class.icon]="_psychic.placeCorrect" title="CheckMark">
@@ -24,8 +24,8 @@
       </div>
   </div>
 
-  <div class="container">
-      <img src="{{objectImage}}" style="width: 100%; height: auto"/>
+  <div class="container" style="width: 150px">
+      <img src="{{objectImage}}" style="width: 150px; height: auto; border-radius: 5%; margin-right: 10px;"/>
 
       <div [class.overlayCorrect]="_psychic.objectCorrect">
           <div [class.icon]="_psychic.objectCorrect" title="CheckMark">
@@ -34,5 +34,5 @@
       </div>
   </div>
 
-  <img src="{{psychicImage}}" style="width: 100%; height: auto; border-radius: 50%" (click)="psychicClicked()"/>
+  <img src="{{psychicImage}}" style="width: 200px; height: auto; border-radius: 50%" (click)="psychicClicked()"/>
 </div>

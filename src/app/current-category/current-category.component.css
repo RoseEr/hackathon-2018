@@ -13,6 +13,8 @@
 .peopleThings {
     width: 385px; 
     height: 250px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 
     border-radius: 5%;
 }
