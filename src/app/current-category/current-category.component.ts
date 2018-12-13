@@ -7,7 +7,7 @@ import { CategoryCard } from '../CategoryCard';
   styleUrls: ['./current-category.component.css']
 })
 export class CurrentCategoryComponent implements OnInit {
-  private _CategoryImages: Array<CategoryCard>;
+  _CategoryImages: Array<CategoryCard>;
   @Input() Size: Number;
   @Input() ImageType: string;
 
