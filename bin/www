@@ -70,11 +70,6 @@ wss.on('connection', function connection(ws) {
       allPsychics.forEach(p => {
         const psych = p.psychic;
 
-        console.log('playerID: ', psych.id);
-        console.log('messageObject.player: ', messageObject.player);
-        console.log('===: ', psych.id === messageObject.player);
-        console.log('==: ', psych.id == messageObject.player);
-
         if(p.psychic.id === messageObject.player) {
           console.log('got matching psychic: ', p);
           p.ws.send(JSON.stringify(messageObject));
@@ -85,7 +80,8 @@ wss.on('connection', function connection(ws) {
     if (messageObject.type === 'psychic-guess') {
       console.log('psychic: ' + messageObject.playerId + ' guessed: ' + messageObject.guess)
       var response = {
-        'type': 'guess-response'
+        'type' : 'guess-response',
+        'playerId' : messageObject.playerId
       };
       var psychicToRespondTo;
 
@@ -96,26 +92,40 @@ wss.on('connection', function connection(ws) {
           // check person first if it hasn't been guessed yet
           if (!psychic.psychic.person.isGuessed) {
             // Are we correct?
-            psychic.psychic.person.isGuessed = messageObject.guess === psychic.psychic.person.id;
-            response['isCorrect'] = messageObject.guess === psychic.psychic.person.id;
             response['category'] = 'person';
             response['guess'] = messageObject.guess;
-
+            if (messageObject.guess === psychic.psychic.person.id) {
+              psychic.psychic.person.isGuessed = true;
+              response['isCorrect'] = true;
+              if (ghost) {
+                ghost.send(JSON.stringify(response));
+              }
+            }
+        
           // next, we then check places
           } else if (!psychic.psychic.place.isGuessed) {
-            psychic.psychic.place.isGuessed = messageObject.guess === psychic.psychic.place.id;
-            response['isCorrect'] = messageObject.guess === psychic.psychic.place.id;
             response['category'] = 'place';
             response['guess'] = messageObject.guess;
+            if (messageObject.guess === psychic.psychic.place.id) {
+              psychic.psychic.place.isGuessed = messageObject.guess === psychic.psychic.place.id;
+              response['isCorrect'] = messageObject.guess === psychic.psychic.place.id;
+              if (ghost) {
+                ghost.send(JSON.stringify(response));
+              }
+            }
 
           
           // last, we then check things
           } else if (!psychic.psychic.thing.isGuessed) {
-            psychic.psychic.thing.isGuessed = messageObject.guess === psychic.psychic.thing.id;
-            response['isCorrect'] = messageObject.guess === psychic.psychic.thing.id;
             response['category'] = 'thing';
             response['guess'] = messageObject.guess;
-
+            if (messageObject.guess === psychic.psychic.thing.id) {
+              psychic.psychic.thing.isGuessed = messageObject.guess === psychic.psychic.thing.id;
+              response['isCorrect'] = messageObject.guess === psychic.psychic.thing.id;
+              if (ghost) {
+                ghost.send(JSON.stringify(response));
+              }
+            }
           }
         }
       });

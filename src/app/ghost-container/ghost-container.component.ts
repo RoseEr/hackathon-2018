@@ -42,6 +42,10 @@ export class GhostContainerComponent implements OnInit {
           this.psychics.push(psychic);
         });
       }
+      if (messageObject.type === 'guess-response') {
+        // {type: "guess-response", playerId: 1, category: "person", guess: 17, isCorrect: true}
+        console.log('player guess: ', messageObject);
+      }
 		});
   }
 
