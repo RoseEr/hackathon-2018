@@ -14,12 +14,18 @@ export class PsychicContainerComponent implements OnInit {
   Things = new Array<Number>();
   PlayerId = Number;
 
+  AllVisions = new Array<Number>();
+
   constructor(socketService: SocketService) { 
     this.socketService = socketService;
     this.socketService.receiveMessage((inboundMessage) => {
       var messageObject = JSON.parse(inboundMessage.data);
       if (messageObject.type === "send-cards") {
         this.Visions = messageObject.cards;
+
+        for(var i = 0; i < this.Visions.length; i++) {
+          this.AllVisions.push(this.Visions[i]);
+        }
       }
       
       if (messageObject.type === "player-creation") {

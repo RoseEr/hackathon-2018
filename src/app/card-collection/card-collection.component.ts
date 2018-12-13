@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card-collection',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-collection.component.css']
 })
 export class CardCollectionComponent implements OnInit {
+  @Input() AllVisions = new Array<Number>();
 
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

@@ -8,4 +8,7 @@
   </app-current-category> 
 </div>
 
-<app-hand [Size]="Cards.length" [Cards]="Cards"></app-hand>
+<div style="max-width: 1500px; flex-direction: row; display: flex;">
+    <app-hand [Size]="Visions.length" [Cards]="Visions"></app-hand>
+    <app-card-collection [AllVisions]="AllVisions"></app-card-collection>
+</div>
