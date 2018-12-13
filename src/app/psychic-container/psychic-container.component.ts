@@ -35,19 +35,49 @@ export class PsychicContainerComponent implements OnInit {
       if (messageObject.type === "player-creation") {
         this.PlayerId = messageObject.id;
 
-        for(let i in messageObject.people) {
-          this.People.push(new CategoryCard(parseInt(i), 0));
+        for(var i = 0; i < messageObject.people.length; i++) {
+          this.People.push(new CategoryCard(messageObject.people[i], 0));
+        }
+
+
+        for(i = 0; i < messageObject.places.length; i++) {
+          this.Places.push(new CategoryCard(messageObject.places[i], 0));
+        }
+
+
+        for(i = 0; i < messageObject.things.length; i++) {
+          this.Things.push(new CategoryCard(messageObject.things[i], 0));
         }
 
         //this.People = messageObject.people;
-        this.Places = messageObject.places;
-        this.Things = messageObject.things;
+        //this.Places = messageObject.places;
+        //this.Things = messageObject.things;
         this.CurrentCategory = this.People;
         this.CategoryType = 'characters';
         console.log('player-creation response, ', messageObject);
       }
 
       if (messageObject.type === 'guess-response') {
+        if(!messageObject.isCorrect && messageObject.category === 'person') {
+          for(var i = 0; i < this.People.length; i++) {
+            if(this.People[i].cardNumber == messageObject.guess) {
+              this.People[i].isCorrect = -1;
+            }
+          }
+        } else if(!messageObject.isCorrect && messageObject.category === 'place') {
+          for(var i = 0; i < this.Places.length; i++) {
+            if(this.Places[i].cardNumber == messageObject.guess) {
+              this.Places[i].isCorrect = -1;
+            }
+          }
+        } else if(!messageObject.isCorrect && messageObject.category === 'objects') {
+          for(var i = 0; i < this.Things.length; i++) {
+            if(this.Things[i].cardNumber == messageObject.guess) {
+              this.Things[i].isCorrect = -1;
+            }
+          }
+        }
+
         if (messageObject.isCorrect && messageObject.category === 'person') {
           this.CurrentCategory = this.Places;
           this.CategoryType = 'locations';

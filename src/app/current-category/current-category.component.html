@@ -3,9 +3,16 @@
 <div style="display: flex; flex-wrap: wrap">
     <div class="container" (click)="handleClick(image.cardNumber)" *ngFor="let image of _CategoryImages; index as i; first as isFirst">
       <img [src]="'../../assets/' + Category + image.cardNumber + '.jpg'" style="width: 385px; height: 250px; border-radius: 5%" />
-      <div class="overlay">
-        <div class="icon" title="Check Mark">
-          <i class="fas fa-check"></i>    
+
+      <div [class.overlayCorrect]="image.isCorrect == 1">
+        <div [class.icon]="image.isCorrect == 1" title="Check Mark">
+          <i [class.fas]="image.isCorrect == 1" [class.fa-check]="image.isCorrect == 1"></i>    
+        </div>
+      </div>
+
+      <div [class.overlayIncorrect]="image.isCorrect == -1">
+        <div [class.icon]="image.isCorrect == -1" title="X Mark">
+          <i [class.fas]="image.isCorrect == -1" [class.fa-times]="image.isCorrect == -1"></i>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 .container {
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 385px;
 }
 
 /* Make the image to responsive */
@@ -11,7 +11,7 @@
 }
 
 /* The overlay effect (full height and width) - lays on top of the container and over the image */
-.overlay {
+.overlayCorrect {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -19,14 +19,22 @@
     right: 0;
     height: 100%;
     width: 100%;
-    opacity: 0;
+    opacity: .3;
     transition: .3s ease;
     background-color: green;
 }
 
-/* When you mouse over the container, fade in the overlay icon*/
-.container:hover .overlay {
+.overlayIncorrect {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
     opacity: .3;
+    transition: .3s ease;
+    background-color: red;
 }
   
 /* The icon inside the overlay is positioned in the middle vertically and horizontally */
@@ -41,8 +49,4 @@
     text-align: center;
 }
 
-/* When you move the mouse over the icon, change color */
-.fa-user:hover {
-    color: #eee;
-}
 

@@ -89,18 +89,23 @@ wss.on('connection', function connection(ws) {
             psychic.psychic.person.isGuessed = messageObject.guess === psychic.psychic.person.id;
             response['isCorrect'] = messageObject.guess === psychic.psychic.person.id;
             response['category'] = 'person';
+            response['guess'] = messageObject.guess;
 
           // next, we then check places
           } else if (!psychic.psychic.place.isGuessed) {
             psychic.psychic.place.isGuessed = messageObject.guess === psychic.psychic.place.id;
             response['isCorrect'] = messageObject.guess === psychic.psychic.place.id;
             response['category'] = 'place';
+            response['guess'] = messageObject.guess;
+
           
           // last, we then check things
           } else if (!psychic.psychic.thing.isGuessed) {
             psychic.psychic.thing.isGuessed = messageObject.guess === psychic.psychic.thing.id;
             response['isCorrect'] = messageObject.guess === psychic.psychic.thing.id;
             response['category'] = 'thing';
+            response['guess'] = messageObject.guess;
+
           }
         }
       });
