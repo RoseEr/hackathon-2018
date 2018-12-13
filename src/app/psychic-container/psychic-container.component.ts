@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../socket.service';
+import { CategoryCard } from '../CategoryCard';
 
 @Component({
   selector: 'app-psychic-container',
@@ -9,10 +10,10 @@ import { SocketService } from '../socket.service';
 export class PsychicContainerComponent implements OnInit {
   socketService: SocketService;
   Visions = new Array<Number>();
-  People = new Array<Number>();
-  Places = new Array<Number>();
-  Things = new Array<Number>();
-  CurrentCategory = new Array<Number>();
+  People = new Array<CategoryCard>();
+  Places = new Array<CategoryCard>();
+  Things = new Array<CategoryCard>();
+  CurrentCategory = new Array<CategoryCard>();
   CategoryType: string;
   PlayerId = Number;
   GuessNumber = Number;
@@ -33,7 +34,12 @@ export class PsychicContainerComponent implements OnInit {
       
       if (messageObject.type === "player-creation") {
         this.PlayerId = messageObject.id;
-        this.People = messageObject.people;
+
+        for(let i in messageObject.people) {
+          this.People.push(new CategoryCard(parseInt(i), 0));
+        }
+
+        //this.People = messageObject.people;
         this.Places = messageObject.places;
         this.Things = messageObject.things;
         this.CurrentCategory = this.People;

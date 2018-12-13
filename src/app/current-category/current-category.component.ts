@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CategoryCard } from '../CategoryCard';
 
 @Component({
   selector: 'app-current-category',
@@ -6,14 +7,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./current-category.component.css']
 })
 export class CurrentCategoryComponent implements OnInit {
-  private _CategoryImages: Array<Number>;
+  private _CategoryImages: Array<CategoryCard>;
   @Input() Size: Number;
   @Input() ImageType: string;
 
   @Output() imageClicked = new EventEmitter<Number>();
 
   @Input()
-  set CategoryImages(CategoryImages: Array<Number>) {
+  set CategoryImages(CategoryImages: Array<CategoryCard>) {
     this._CategoryImages = CategoryImages;
 
     switch(this.ImageType) {
